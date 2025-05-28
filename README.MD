@@ -4,7 +4,6 @@
 
 ### Run the Frontend:
 ```bash
-cd sample-library
 pnpm dev
 
 ```
