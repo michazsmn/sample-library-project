@@ -28,13 +28,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className="h-full">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full flex flex-col justify-between font-[family-name:var(--font-geist-sans)] min-h-screen`}>
         <header className="flex justify-between p-10 bg-black">
-          <h1 className="text-5xl font-bold">Sample Library</h1>
+          <h1 className="text-5xl font-bold">
+            <Link href="/">Sample Library</Link>
+          </h1>
           <nav className="flex gap-4 text-xl">
             <Link href="/login" className="headerLink">Login</Link>
             <Link href="/" className="headerLink">Home</Link>
           </nav>
         </header>
-        <main className="flex flex-col gap-[32px] items-center">
+        <main className="flex flex-col gap-[32px] items-center mb-40">
           {children}
         </main>
         <footer className="h-6 bg-black">
