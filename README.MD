@@ -2,10 +2,14 @@
 
 ## Run Project
 
+### Run The Database
+```bash
+docker compose up
+```
+
 ### Run the Frontend:
 ```bash
 pnpm dev
-
 ```
 
 ### Run the Backend:
