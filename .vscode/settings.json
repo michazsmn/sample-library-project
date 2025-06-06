@@ -1,0 +1,9 @@
+{
+    "python.analysis.extraPaths": [
+        "./api",
+        "./auth",
+        "./user",
+        "./sample_library"
+
+    ]
+}

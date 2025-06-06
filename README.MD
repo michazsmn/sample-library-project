@@ -1,5 +1,12 @@
 # Sample Library
 
+## Install Dependencies
+
+### Python
+```bash
+source .venv/bin/activate
+```
+
 ## Run Project
 
 ### Run The Database
