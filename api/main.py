@@ -44,4 +44,4 @@ def get_user_loops():
     user_loops = [serialize_doc(loop) for loop in collection_name.find()]
     return user_loops
 
-app.include_router(auth_router, prefix="/api")
+app.include_router(auth_router)

@@ -3,7 +3,7 @@ from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 import jwt
 from auth.models.token import TokenData
-from auth.utils.auth_utils import verify_password
+from auth.utils.auth_utils import get_hashed_password, verify_password
 from pymongo_get_database import get_database
 from user.services.user_service import get_user_by_email
 from datetime import datetime, timedelta, timezone
@@ -15,7 +15,19 @@ SECRET_KEY = "W7lSpVhfhvd4ZOrzzTldEOIIesX7pHVTAA/S7Yszfis="
 ALGORITHM = "HS256"
 
 # OAuth2 password bearer flow for token retrieval
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+
+def create_user(email: str, password: str, name: str, db = Depends(get_database)):
+    if get_user_by_email(email, db):
+        return None  # User already exists
+    hashed_password = get_hashed_password(password)  # Assume this hashes the password
+    user_data = {
+        "email": email,
+        "password": hashed_password,
+        "name": name
+    }
+    user = db["users"].insert_one(user_data)  # Save user to the database
+    return user
 
 # Authentication function
 def authenticate_user(email: str, password: str, db = Depends(get_database)):

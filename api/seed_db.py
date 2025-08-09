@@ -2,6 +2,7 @@ from pymongo_get_database import get_database
 
 user_col = get_database()["users"]
 
+#Example entries for sanity check, passwords not hashed
 user_col.insert_many([
     {
         "email": "email@gmail.com",

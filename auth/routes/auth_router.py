@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 
 from auth.models.token import Token
-from auth.services.auth_service import authenticate_user, create_access_token
+from auth.services.auth_service import authenticate_user, create_access_token, create_user
 from pymongo_get_database import get_database
 
 
@@ -13,12 +13,13 @@ auth_router = APIRouter(
     tags=["auth"],
 )
 
-auth_router.post("/token")
+@auth_router.post("/token")
 async def login_for_access_token(
-        form_data : Annotated[OAuth2PasswordRequestForm, Depends()],
+        email : str,
+        password : str,
         db = Depends(get_database)
 ) -> Token:
-    user = authenticate_user(form_data.username, form_data.password, db)
+    user = authenticate_user(email, password, db)
     if not user:
         raise HTTPException(
             status_code=401,
@@ -32,3 +33,19 @@ async def login_for_access_token(
     )
 
     return Token(access_token=access_token, token_type="bearer")
+
+@auth_router.post("/register")
+async def register_user(
+        email: str,
+        password: str,
+        name : str,
+        db = Depends(get_database)
+):
+    user = create_user(email, password, name, db)
+    if not user:
+        raise HTTPException(
+            status_code=400,
+            detail="User already exists",
+        )
+    return {"message": "User created successfully", "user_id": str(user.inserted_id)}
+

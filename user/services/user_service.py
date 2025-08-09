@@ -1,6 +1,6 @@
 from api.pymongo_get_database import get_database
 
-def get_user_by_email(email: str, db=get_database):
+def get_user_by_email(email: str, db=get_database()):
     """
     Retrieve a user from the database by their email address.
 
