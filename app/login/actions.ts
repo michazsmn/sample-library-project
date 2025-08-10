@@ -5,11 +5,17 @@ export async function signup(formData: FormData) {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  // Here you would typically handle the signup logic, such as saving the user to a database
-  // For demonstration purposes, we'll just log the email and password
-  console.log("Email:", email);
-  console.log("Password:", password);
+  await fetch('http://127.0.0.1:8000/auth/token', {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        email: email,
+        password: password,
+    }),
+  });
 
-  // Return a response or redirect as needed
   return { success: true, message: "Signup successful!" };
 }

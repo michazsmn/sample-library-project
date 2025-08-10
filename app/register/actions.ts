@@ -6,15 +6,23 @@ export async function registration(formData: FormData) {
     const passwordRepeat = formData.get("passwordrepeat");
     const username = formData.get("username");
 
-    // Here you would typically handle the signup logic, such as saving the user to a database
-    // For demonstration purposes, we'll just log the email and password
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Username:", username);
-    console.log("Password Repeat:", passwordRepeat);
+    if (password !== passwordRepeat) {
+        throw new Error("Passwords do not match");
+    } else {
+        
+    await fetch('http://127.0.0.1:8000/auth/register', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password,
+            username: username,
+        }),
+    });
 
-    // Return a response or redirect as needed
     return { success: true, message: "Registration successful!" };
-    // This function is a server action for handling user signup
-
+    }
 }

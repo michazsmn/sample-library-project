@@ -17,7 +17,7 @@ ALGORITHM = "HS256"
 # OAuth2 password bearer flow for token retrieval
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
-def create_user(email: str, password: str, name: str, db = Depends(get_database)):
+def create_user(email: str, password: str, name: str, db):
     if get_user_by_email(email, db):
         return None  # User already exists
     hashed_password = get_hashed_password(password)  # Assume this hashes the password
